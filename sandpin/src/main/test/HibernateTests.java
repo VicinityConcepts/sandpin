@@ -1,5 +1,5 @@
-import com.vicinityconcepts.sandpin.test.Employee;
-import com.vicinityconcepts.sandpin.test.EmployeeManager;
+import com.vc.sandpin.test.Employee;
+import com.vc.sandpin.test.EmployeeManager;
 import org.junit.Test;
 
 public class HibernateTests {

@@ -1,7 +1,8 @@
-package com.vicinityconcepts.sandpin;
+package com.vc.sandpin;
 
-import com.vicinityconcepts.sandpin.test.EmployeeManager;
-import com.vicinityconcepts.lib.util.Log;
+import com.vc.sandpin.test.EmployeeManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
@@ -18,11 +19,12 @@ import java.util.Arrays;
 		loadOnStartup = 0
 )
 public class SandpinControllerServlet extends HttpServlet {
+	private static final Logger LOG = LogManager.getLogger();
 	private static final String QUERY_DELIMITER = "&";
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		Log.info("SandpinControllerServlet received " + req.getMethod() + ": " + req.getRemoteAddr());
+		LOG.info("Request received from {}", req.getRemoteAddr());
 		byte[] response = parseAndProcess(req);
 		try (ServletOutputStream out = resp.getOutputStream()) {
 			out.write(response);

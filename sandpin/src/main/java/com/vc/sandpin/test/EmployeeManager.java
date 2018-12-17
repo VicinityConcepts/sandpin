@@ -1,13 +1,15 @@
-package com.vicinityconcepts.sandpin.test;
+package com.vc.sandpin.test;
 
-import com.vicinityconcepts.sandpin.PersistenceManager;
-import com.vicinityconcepts.lib.util.Log;
+import com.vc.sandpin.PersistenceManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
 
 public class EmployeeManager {
+	private static final Logger LOG = LogManager.getLogger();
 
 	public static Employee[] getEmployees() {
 		Transaction tx = null;
@@ -17,7 +19,7 @@ public class EmployeeManager {
 			tx.commit();
 			return (Employee[]) employees.toArray(new Employee[0]);
 		} catch (Exception e) {
-			Log.error("Something went wrong during database session. Transaction has been rolled back.", e);
+			LOG.error("Something went wrong during database session. Transaction has been rolled back.", e);
 			if (tx != null) tx.rollback();
 			return null;
 		}

@@ -1,6 +1,6 @@
-package com.vicinityconcepts.sandpin.test;
+package com.vc.sandpin.test;
 
-import com.vicinityconcepts.sandpin.PersistentObject;
+import com.vc.sandpin.PersistentObject;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +9,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "employees")
 public class Employee extends PersistentObject {
+	private static final String TO_STRING_FORMAT = "Name: %s %s, Salary: %s, ID: %s";
+
 	@Column(name = "first_name")
 	private String firstName;
 
@@ -49,5 +51,10 @@ public class Employee extends PersistentObject {
 
 	public void setSalary(int salary) {
 		this.salary = salary;
+	}
+
+	@Override
+	public String toString() {
+		return String.format(TO_STRING_FORMAT, firstName, lastName, salary, getUUID());
 	}
 }

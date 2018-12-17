@@ -1,15 +1,17 @@
-package com.vicinityconcepts.sandpin.launcher;
+package com.vc.sandpin.launcher;
 
-import com.vicinityconcepts.lib.util.Log;
-import com.vicinityconcepts.lib.util.Service;
+import com.vc.lib.util.Service;
 import org.apache.catalina.LifecycleEvent;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.LifecycleListener;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import java.io.File;
 
 public class SandpinOrbit extends Service implements LifecycleListener {
+	private static final Logger LOG = LogManager.getLogger();
 	private static final int SERVICE_UPDATE_FREQUENCY = 1000 * 60;
 	private static final int SERVICE_RESTART_MAX_ATTEMPTS = 5;
 
@@ -22,43 +24,47 @@ public class SandpinOrbit extends Service implements LifecycleListener {
 	}
 
 	@Override
-	public void start() {
-		super.start();
+	public boolean start() {
+		boolean success = super.start();
 		if (tomcat == null) {
 			try {
 				tomcat = new TomcatContainer(warFile);
 				tomcat.addLifecycleListener(this);
 				tomcat.start();
+				return success;
 			} catch (ServletException | LifecycleException e) {
-				Log.error("Failed to start Tomcat container.", e);
+				LOG.error("Failed to start Tomcat container.", e);
 				stop();
+				return false;
 			}
-		}
+		} else return success;
 	}
 
 	@Override
-	public void stop() {
-		super.stop();
+	public boolean stop() {
+		boolean success = super.stop();
 		if (tomcat != null) {
 			try {
 				tomcat.stop();
 				tomcat = null;
+				return success;
 			} catch (LifecycleException e) {
-				Log.error("Failed to stop Tomcat container.", e);
+				LOG.error("Failed to stop Tomcat container.", e);
+				return false;
 			}
-		}
+		} else return success;
 	}
 
 	@Override
 	public void restart() {
 		int attempts = 1;
 		while (attempts <= SERVICE_RESTART_MAX_ATTEMPTS) {
-			Log.info("Restarting orbit. (Attempt " + attempts + ")");
+			LOG.info("Restarting orbit. (Attempt " + attempts + ")");
 			try {
 				super.restart();
 				return;
 			} catch (Exception e) {
-				Log.error("Service encountered an error during restart.", e);
+				LOG.error("Service encountered an error during restart.", e);
 				attempts++;
 			}
 		}
@@ -70,6 +76,6 @@ public class SandpinOrbit extends Service implements LifecycleListener {
 
 	@Override
 	public void lifecycleEvent(LifecycleEvent event) {
-		Log.info("Lifecycle Event: " + event.getLifecycle().getStateName() + " (" + event.getType() + ")");
+		LOG.info("Lifecycle Event: " + event.getLifecycle().getStateName() + " (" + event.getType() + ")");
 	}
 }

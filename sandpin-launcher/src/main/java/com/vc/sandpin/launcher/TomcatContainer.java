@@ -1,6 +1,5 @@
-package com.vicinityconcepts.sandpin.launcher;
+package com.vc.sandpin.launcher;
 
-import com.vicinityconcepts.lib.util.Log;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.LifecycleListener;
 import org.apache.catalina.WebResourceRoot;
@@ -8,11 +7,14 @@ import org.apache.catalina.core.StandardContext;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.catalina.webresources.StandardRoot;
 import org.apache.catalina.webresources.WarResourceSet;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import java.io.File;
 
 public class TomcatContainer {
+	private static final Logger LOG = LogManager.getLogger();
 	private static final int PORT = 8080;
 	private static final String WEBAPP_PATH = System.getProperty("user.dir");
 	private static final String CATALINA_HOME = "tomcat";
@@ -38,14 +40,18 @@ public class TomcatContainer {
 		tomcat.getHost().setAppBase(WEBAPP_PATH);
 		StandardContext context = (StandardContext) tomcat.addWebapp("", new File(WEBAPP_PATH).getAbsolutePath());
 
+		// Tomcat 9 no longer automatically adds connectors, so this is necessary
+		// in order to trigger the creation of the default connector.
+		tomcat.getConnector();
+
 		if (warFile == null || warFile.isDirectory()) {
-			Log.info("Searching for WAR file.");
+			LOG.info("Searching for WAR file.");
 			if (warFile == null) warFile = findWarFile(new File(WEBAPP_PATH));
 			else warFile = findWarFile(warFile);
 			if (warFile == null) throw new ServletException("Failed to locate WAR file.");
 		}
 
-		Log.info("Using WAR file: " + warFile.getAbsolutePath());
+		LOG.info("Using WAR file: " + warFile.getAbsolutePath());
 		WebResourceRoot resources = new StandardRoot(context);
 		resources.addPreResources(new WarResourceSet(resources, "/", warFile.getAbsolutePath()));
 		context.setResources(resources);

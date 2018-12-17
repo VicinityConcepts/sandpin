@@ -1,6 +1,7 @@
-package com.vicinityconcepts.sandpin;
+package com.vc.sandpin;
 
-import com.vicinityconcepts.lib.util.Log;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.annotations.GenericGenerator;
@@ -12,6 +13,8 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public abstract class PersistentObject {
+	protected static final Logger LOG = LogManager.getLogger();
+
 	@Id
 	@GeneratedValue(generator = "uuid")
 	@GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -32,7 +35,7 @@ public abstract class PersistentObject {
 			session.save(this);
 			tx.commit();
 		} catch (Exception e) {
-			Log.error("Something went wrong during database session. Transaction has been rolled back.", e);
+			LOG.error("Something went wrong during database session. Transaction has been rolled back.", e);
 			if (tx != null) tx.rollback();
 		}
 	}

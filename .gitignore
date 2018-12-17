@@ -2,4 +2,5 @@
 *.iml
 target
 .idea
-logging.properties
+*.log
+*.gz

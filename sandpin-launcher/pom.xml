@@ -1,7 +1,7 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.vicinityconcepts.jade</groupId>
-    <artifactId>jade-launcher</artifactId>
+    <groupId>com.vc.sandpin</groupId>
+    <artifactId>sandpin-launcher</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>Sandpin Launcher</name>
     <repositories>
@@ -12,7 +12,7 @@
     </repositories>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <tomcat.version>8.5.35</tomcat.version>
+        <tomcat.version>9.0.14</tomcat.version>
         <maven.compiler.source>9</maven.compiler.source>
         <maven.compiler.target>9</maven.compiler.target>
     </properties>
@@ -28,36 +28,30 @@
             <version>${tomcat.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-jasper</artifactId>
-            <version>${tomcat.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-jasper-el</artifactId>
-            <version>${tomcat.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-jsp-api</artifactId>
-            <version>${tomcat.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vicinityconcepts.lib</groupId>
+            <groupId>com.vc.lib</groupId>
             <artifactId>vc-lib</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.11.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-jul</artifactId>
+            <version>2.11.1</version>
+        </dependency>
     </dependencies>
     <build>
-        <finalName>jade-launcher</finalName>
-        <directory>build</directory>
+        <finalName>sandpin-launcher</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.vicinityconcepts.sandpin.launcher.SandpinOrbitBootstrap</mainClass>
+                            <mainClass>com.vc.sandpin.launcher.SandpinOrbitBootstrap</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
