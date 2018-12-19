@@ -28,7 +28,7 @@ public class StartStopListener implements ServletContextListener {
 
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
-		PersistenceManager.close();
+		//PersistenceManager.close();
 		LOG.info("Sandpin servlet destroyed.");
 	}
 }

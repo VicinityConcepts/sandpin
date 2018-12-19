@@ -28,11 +28,6 @@ public final class PersistenceManager extends Service {
 		start();
 	}
 
-	@Override
-	protected void run() {
-		LOG.info("Status: {}", SESSION_FACTORY.getStatistics().getConnectCount());
-	}
-
 	public static Session openSession() {
 		return SESSION_FACTORY.openSession();
 	}
@@ -41,5 +36,10 @@ public final class PersistenceManager extends Service {
 		LOG.info("Closing Hibernate session factory.");
 		SESSION_FACTORY.close();
 		SINGLETON.stop();
+	}
+
+	@Override
+	protected void run() {
+		LOG.info("Status: {}", SESSION_FACTORY.getStatistics().getConnectCount());
 	}
 }

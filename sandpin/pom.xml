@@ -78,7 +78,11 @@
                 <version>3.2.2</version>
                 <configuration>
                     <failOnMissingWebXml>true</failOnMissingWebXml>
-                    <webXml>./web.xml</webXml>
+                    <webResources>
+                        <resource>
+                            <directory>node.js/build</directory>
+                        </resource>
+                    </webResources>
                 </configuration>
             </plugin>
             <plugin>

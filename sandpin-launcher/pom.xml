@@ -53,6 +53,10 @@
                         <manifest>
                             <mainClass>com.vc.sandpin.launcher.SandpinOrbitBootstrap</mainClass>
                         </manifest>
+                        <manifestEntries>
+                            <!-- Required for Log4j to work -->
+                            <Multi-Release>true</Multi-Release>
+                        </manifestEntries>
                     </archive>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>

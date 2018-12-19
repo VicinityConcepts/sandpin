@@ -2,48 +2,39 @@ package com.vc.sandpin.launcher;
 
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.LifecycleListener;
-import org.apache.catalina.WebResourceRoot;
-import org.apache.catalina.core.StandardContext;
+import org.apache.catalina.startup.CatalinaBaseConfigurationSource;
 import org.apache.catalina.startup.Tomcat;
-import org.apache.catalina.webresources.StandardRoot;
-import org.apache.catalina.webresources.WarResourceSet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.servlet.ServletException;
 import java.io.File;
 
 public class TomcatContainer {
-	private static final Logger LOG = LogManager.getLogger();
-	private static final int PORT = 8080;
-	private static final String WEBAPP_PATH = System.getProperty("user.dir");
+	//private static final Logger LOG = LogManager.getLogger();
 	private static final String CATALINA_HOME = "tomcat";
-	private static final String WAR_FILE_EXTENSION = ".war";
+	private static final String SERVER_XML_PATH = "server.xml";
+	//private static final String WAR_FILE_EXTENSION = ".war";
 	private static final String PROPERTY_CATALINA_HOME = "catalina.home";
-	private static final String PROPERTY_CATALINA_BASE = "catalina.base";
-	private static final String PROPERTY_CATALINA_LOG = "catalina.out";
 
 	private final Tomcat tomcat;
 
-	public TomcatContainer(File warFile) throws ServletException {
-		String catalinaHomePath = new File(CATALINA_HOME).getAbsolutePath();
-		System.setProperty(PROPERTY_CATALINA_HOME, catalinaHomePath);
-		System.setProperty(PROPERTY_CATALINA_BASE, catalinaHomePath);
-		System.setProperty(PROPERTY_CATALINA_LOG, catalinaHomePath);
+	public TomcatContainer(/*File warFile*/) /*throws ServletException*/ {
+		System.setProperty(PROPERTY_CATALINA_HOME, CATALINA_HOME);
 		tomcat = new Tomcat();
-		initialize(warFile);
+		tomcat.init(new CatalinaBaseConfigurationSource(new File(CATALINA_HOME), SERVER_XML_PATH));
 	}
 
-	private void initialize(File warFile) throws ServletException {
-		tomcat.setSilent(true);
-		tomcat.setPort(PORT);
-		tomcat.getHost().setAppBase(WEBAPP_PATH);
-		StandardContext context = (StandardContext) tomcat.addWebapp("", new File(WEBAPP_PATH).getAbsolutePath());
+	/*private void initialize(File warFile) throws ServletException {
+
+		//tomcat.setSilent(true);
+		//tomcat.setPort(PORT);
+		//tomcat.getHost().setAppBase(WEBAPP_PATH);
 
 		// Tomcat 9 no longer automatically adds connectors, so this is necessary
 		// in order to trigger the creation of the default connector.
-		tomcat.getConnector();
+		//tomcat.getConnector();
 
+		/*StandardContext context = (StandardContext) tomcat.addWebapp("", new File(WEBAPP_PATH).getAbsolutePath());
 		if (warFile == null || warFile.isDirectory()) {
 			LOG.info("Searching for WAR file.");
 			if (warFile == null) warFile = findWarFile(new File(WEBAPP_PATH));
@@ -71,7 +62,7 @@ public class TomcatContainer {
 		}
 
 		return null;
-	}
+	}*/
 
 	public void start() throws LifecycleException {
 		tomcat.start();
