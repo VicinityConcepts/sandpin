@@ -16,10 +16,8 @@ public class SandpinOrbit extends Service implements LifecycleListener {
 	private static final int SERVICE_RESTART_MAX_ATTEMPTS = 5;
 
 	private TomcatContainer tomcat;
-	private final File warFile;
 
-	public SandpinOrbit(File warFile) {
-		this.warFile = warFile;
+	public SandpinOrbit() {
 		setLoopRate(SERVICE_UPDATE_FREQUENCY);
 	}
 
@@ -28,11 +26,11 @@ public class SandpinOrbit extends Service implements LifecycleListener {
 		boolean success = super.start();
 		if (tomcat == null) {
 			try {
-				tomcat = new TomcatContainer(warFile);
+				tomcat = new TomcatContainer();
 				tomcat.addLifecycleListener(this);
 				tomcat.start();
 				return success;
-			} catch (ServletException | LifecycleException e) {
+			} catch (LifecycleException e) {
 				LOG.error("Failed to start Tomcat container.", e);
 				stop();
 				return false;

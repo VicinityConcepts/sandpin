@@ -25,7 +25,7 @@ public class SandpinOrbitBootstrap {
 		for (String arg : args) parseArg(arg);
 
 		try {
-			SandpinOrbit orbit = new SandpinOrbit(warFile);
+			SandpinOrbit orbit = new SandpinOrbit();
 			if (interactive) runInTerminal(orbit);
 			else orbit.start();
 		} catch (Exception e) {
