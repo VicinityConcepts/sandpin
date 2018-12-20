@@ -80,7 +80,7 @@
                     <failOnMissingWebXml>true</failOnMissingWebXml>
                     <webResources>
                         <resource>
-                            <directory>node.js/build</directory>
+                            <directory>node.js/sandpin/build</directory>
                         </resource>
                     </webResources>
                 </configuration>
@@ -104,19 +104,6 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>npm install (clean)</id>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <phase>pre-clean</phase>
-                        <configuration>
-                            <executable>npm</executable>
-                            <arguments>
-                                <argument>install</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                    <execution>
                         <id>npm run build (compile)</id>
                         <goals>
                             <goal>exec</goal>
@@ -132,7 +119,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <workingDirectory>node.js</workingDirectory>
+                    <workingDirectory>node.js/sandpin</workingDirectory>
                 </configuration>
             </plugin>
         </plugins>

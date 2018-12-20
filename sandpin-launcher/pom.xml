@@ -47,6 +47,29 @@
         <finalName>sandpin-launcher</finalName>
         <plugins>
             <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>tomcat/work</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>tomcat/logs</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>tomcat/webapps</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>tomcat/deploy</directory>
+                            <includes>
+                                <include>**/*.war</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <archive>

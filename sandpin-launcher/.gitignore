@@ -3,3 +3,4 @@ target
 tomcat/work
 tomcat/logs
 tomcat/webapps
+tomcat/deploy/*.war

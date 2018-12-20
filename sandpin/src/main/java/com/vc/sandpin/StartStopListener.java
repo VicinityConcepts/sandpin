@@ -17,7 +17,7 @@ public class StartStopListener implements ServletContextListener {
 		LOG.info("Sandpin servlet initializing.");
 
 		try {
-			//Class.forName(PersistenceManager.class.getName());
+			Class.forName(PersistenceManager.class.getName());
 		} catch (Exception e) {
 			LOG.error("Failed to initialize Sandpin servlet.", e);
 			throw new ExceptionInInitializerError("Sandpin initialization failed.");
@@ -28,7 +28,7 @@ public class StartStopListener implements ServletContextListener {
 
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
-		//PersistenceManager.close();
+		PersistenceManager.close();
 		LOG.info("Sandpin servlet destroyed.");
 	}
 }

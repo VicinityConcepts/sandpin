@@ -7,9 +7,6 @@ import org.apache.catalina.LifecycleListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.servlet.ServletException;
-import java.io.File;
-
 public class SandpinOrbit extends Service implements LifecycleListener {
 	private static final Logger LOG = LogManager.getLogger();
 	private static final int SERVICE_UPDATE_FREQUENCY = 1000 * 60;
@@ -26,8 +23,7 @@ public class SandpinOrbit extends Service implements LifecycleListener {
 		boolean success = super.start();
 		if (tomcat == null) {
 			try {
-				tomcat = new TomcatContainer();
-				tomcat.addLifecycleListener(this);
+				tomcat = new TomcatContainer(this);
 				tomcat.start();
 				return success;
 			} catch (LifecycleException e) {
