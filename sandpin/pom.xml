@@ -78,14 +78,14 @@
                 <version>3.2.2</version>
                 <configuration>
                     <failOnMissingWebXml>true</failOnMissingWebXml>
-                    <webResources>
+                    <!--<webResources>
                         <resource>
                             <directory>node.js/sandpin/build</directory>
                         </resource>
-                    </webResources>
+                    </webResources>-->
                 </configuration>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.6.0</version>
@@ -121,7 +121,7 @@
                 <configuration>
                     <workingDirectory>node.js/sandpin</workingDirectory>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 </project>

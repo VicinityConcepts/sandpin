@@ -24,4 +24,19 @@ public class EmployeeManager {
 			return null;
 		}
 	}
+
+	public static Employee getEmployee(String firstName, String lastName) {
+		Transaction tx = null;
+		try (Session session = PersistenceManager.openSession()) {
+			tx = session.beginTransaction();
+			List employees = session.createQuery("FROM Employee WHERE first_name = '" + firstName + "' AND last_name = '" + lastName + "'").list();
+			tx.commit();
+			if (employees.size() > 0) return (Employee) employees.get(0);
+			else return null;
+		} catch (Exception e) {
+			LOG.error("Something went wrong during database session. Transaction has been rolled back.", e);
+			if (tx != null) tx.rollback();
+			return null;
+		}
+	}
 }
